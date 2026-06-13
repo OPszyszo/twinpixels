@@ -1,1 +1,526 @@
-Site is in build!
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Chinchilla Clicker — oficjalna strona gry</title>
+    <!-- Google Fonts & Font Awesome 6 (free) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #fff9f0 0%, #fde9d4 100%);
+            color: #2d2a24;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header / Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 1rem 1.5rem;
+            background: rgba(255, 250, 240, 0.7);
+            border-radius: 4rem 2rem 4rem 2rem;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
+        }
+
+        .chinchilla-icon {
+            font-size: 5rem;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
+            animation: bounceSoft 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes bounceSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c57f4a, #a56032);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-top: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #7b5a42;
+            margin: 0.75rem 0 1.5rem;
+            font-weight: 500;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 1.8rem 0 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary {
+            background: #2c5538;
+            color: white;
+            border-bottom: 3px solid #1d3b27;
+        }
+
+        .btn-primary:hover {
+            background: #23643e;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -10px #2c553880;
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+            border-bottom: 3px solid #4752c4;
+        }
+
+        .btn-discord:hover {
+            background: #4752c4;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid #d9b48b;
+            color: #a56032;
+        }
+
+        .btn-outline:hover {
+            background: #fff3e8;
+            border-color: #b46f3a;
+        }
+
+        /* karty ogólne */
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 15px 35px -12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: #e3b17c;
+            border-radius: 4px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Clicker demo */
+        .clicker-demo {
+            background: #fef7e8;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border: 1px solid #ffdfb5;
+        }
+
+        .clicker-count {
+            font-size: 4rem;
+            font-weight: 800;
+            background: #ffffffdd;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 100px;
+            margin: 1rem 0;
+            box-shadow: inset 0 1px 4px #0001, 0 5px 12px #e0c8aa;
+            color: #6b3e1c;
+        }
+
+        .clicker-btn {
+            background: #f3b45b;
+            border: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.1s linear;
+            box-shadow: 0 6px 0 #a3521a;
+            color: #2d2a24;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .clicker-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #a3521a;
+        }
+
+        .reset-clicker {
+            background: none;
+            border: 1px solid #cfa97c;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            margin-left: 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .reset-clicker:hover {
+            background: #e9d9c6;
+        }
+
+        /* error codes grid */
+        .error-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.8rem;
+        }
+
+        .error-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border-left: 8px solid #d68b45;
+            transition: all 0.2s;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+
+        .error-card:hover {
+            transform: translateY(-5px);
+            background: white;
+            box-shadow: 0 20px 30px -12px rgba(110, 60, 20, 0.2);
+        }
+
+        .error-code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-weight: 800;
+            font-size: 1.3rem;
+            background: #2d2a24;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: #ffddb0;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .error-desc {
+            color: #3a2c1f;
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .fa-icon-error {
+            color: #d68b45;
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 1rem 1rem;
+            border-top: 1px solid #eedbbc;
+            color: #7b6246;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+            .btn {
+                justify-content: center;
+            }
+            .clicker-count {
+                font-size: 2.8rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f8e3c2, #f7dbb5);
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .badge-electron {
+            background: #f0e1cf;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #784a1a;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Hero -->
+    <div class="hero">
+        <div class="chinchilla-icon">
+            🐭✨
+        </div>
+        <h1>Chinchilla Clicker</h1>
+        <div class="tagline">
+            <i class="fas fa-paw"></i>  Klikaj, zbieraj orzeszki i buduj swoją chinchillową impetę!  <i class="fas fa-paw"></i>
+        </div>
+        <div class="btn-group">
+            <a href="https://twin-pixels-studio.itch.io/chinchilla" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fas fa-download"></i> Pobierz grę (itch.io)
+            </a>
+            <a href="https://discord.gg/AwZErDRtDq" target="_blank" rel="noopener noreferrer" class="btn btn-discord">
+                <i class="fab fa-discord"></i> Dołącz na Discord
+            </a>
+        </div>
+        <p style="max-width: 600px; margin: 1rem auto 0; font-size: 0.9rem;">
+            🎮 <span class="highlight">Chinchilla Clicker</span> — wciągający clicker w technologii Electron. Zbieraj punkty, odblokowuj osiągnięcia i rozwijaj swoje futrzaste imperium!
+        </p>
+    </div>
+
+    <!-- Informacje o grze + demo clicker -->
+    <div class="grid-2col">
+        <div class="card">
+            <i class="fas fa-gamepad" style="font-size: 2rem; color: #c57f4a;"></i>
+            <h3 style="font-size: 1.6rem; margin: 0.5rem 0;">Czym jest Chinchilla Clicker?</h3>
+            <p style="margin-bottom: 0.5rem;">To relaksująca, ale satysfakcjonująca gra typu clicker, w której wcielasz się w opiekuna uroczych <strong>chinchilli</strong>. Każde kliknięcie przynosi słodkie orzeszki, które wymienisz na ulepszenia i dodatkowe bonusy. </p>
+            <p>Gra zbudowana w oparciu o framework <i class="fab fa-node-js"></i> Electron, co gwarantuje płynną rozgrywkę na komputerach PC. Dołącz do społeczności na Discordzie i rywalizuj w globalnych rankingach!</p>
+            <div style="margin-top: 1rem;">
+                <span class="badge-electron"><i class="fas fa-microchip"></i> Electron based</span>
+                <span class="badge-electron" style="margin-left: 0.5rem;"><i class="fas fa-chart-line"></i> Incremental</span>
+            </div>
+        </div>
+        <div class="clicker-demo">
+            <i class="fas fa-mouse-pointer" style="font-size: 1.8rem; color:#c57f4a;"></i>
+            <h3 style="margin: 0.3rem 0;">🍪 Wypróbuj demo clickera! 🐭</h3>
+            <p style="font-size: 0.9rem;">Klikaj w przycisk i poczuj satysfakcję — w pełnej wersji odblokujesz dziesiątki ulepszeń!</p>
+            <div class="clicker-count" id="clickCounterDisplay">0</div>
+            <div>
+                <button class="clicker-btn" id="clickerMainBtn">
+                    <i class="fas fa-hand-peace"></i> Kliknij w chinchillę!
+                </button>
+                <button class="reset-clicker" id="resetClickerBtn">
+                    <i class="fas fa-undo-alt"></i> Reset
+                </button>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.75rem; color:#a77347;"><i class="fas fa-info-circle"></i> To tylko symulacja — pełna mechanika czeka w grze!</p>
+        </div>
+    </div>
+
+    <!-- Error Codes Section -->
+    <div style="margin: 3rem 0 1rem;">
+        <div class="section-title">
+            <i class="fas fa-bug"></i> Chinchilla Clicker — Error Codes
+        </div>
+        <p style="margin-top: 0.5rem; margin-bottom: 1rem; color: #4f3a27;">Poniżej znajdziesz listę kodów błędów, które mogą wystąpić w grze. Pomogą one w diagnozowaniu problemów z aplikacją (środowisko Electron).</p>
+    </div>
+
+    <div class="error-grid">
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-terminal fa-icon-error"></i> CHI-BOOT-001</div>
+            <div class="error-desc">🚫 Błąd podczas startu gry lub ładowania danych startowych. Sprawdź integralność plików gry lub spróbuj uruchomić jako administrator.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-code-branch fa-icon-error"></i> CHI-RUNTIME-001</div>
+            <div class="error-desc">⚠️ Nieobsłużony błąd JavaScript w rendererze. Może być spowodowany uszkodzoną instalacją lub konfliktem z pluginami.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-hourglass-half fa-icon-error"></i> CHI-RUNTIME-002</div>
+            <div class="error-desc">⏳ Nieobsłużony Promise rejection w rendererze. Występuje gdy asynchroniczna operacja nie zostanie prawidłowo obsłużona.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-globe fa-icon-error"></i> CHI-WEB-001</div>
+            <div class="error-desc">🌐 Okno gry nie załadowało poprawnie plików aplikacji. Spróbuj wyłączyć firewall/antivirus lub zainstaluj grę ponownie.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-tachometer-alt fa-icon-error"></i> CHI-RENDER-CRASH-001</div>
+            <div class="error-desc">💥 Proces renderera Electron został zamknięty lub crashował. Zbyt duże obciążenie pamięci lub uszkodzone zasoby.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-microchip fa-icon-error"></i> CHI-MAIN-001</div>
+            <div class="error-desc">⚙️ Nieobsłużony wyjątek w procesie głównym Electron. Błąd krytyczny — skontaktuj się z supportem na Discordzie.</div>
+        </div>
+        <div class="error-card">
+            <div class="error-code"><i class="fas fa-ban fa-icon-error"></i> CHI-MAIN-002</div>
+            <div class="error-desc">📛 Nieobsłużony Promise rejection w procesie głównym Electron. Aktualizuj grę do najnowszej wersji, aby uniknąć tego błędu.</div>
+        </div>
+    </div>
+
+    <!-- Dodatkowe info o wsparciu i discordzie -->
+    <div style="background: #f9efdf; border-radius: 1.5rem; padding: 1.5rem; margin: 2rem 0 0; text-align: center;">
+        <i class="fab fa-discord" style="font-size: 2rem; color: #5865F2;"></i>
+        <h3 style="margin: 0.5rem 0;">Potrzebujesz pomocy? Zgłoś błąd!</h3>
+        <p>Jeżeli napotkasz któryś z powyższych kodów błędów, <strong>dołącz na serwer Discord</strong> i wklej kod błędu w kanale #🐞・support. Nasi moderatorzy i twórcy pomogą Ci jak najszybciej.</p>
+        <a href="https://discord.gg/AwZErDRtDq" target="_blank" class="btn btn-outline" style="margin-top: 1rem; display: inline-flex;">
+            <i class="fab fa-discord"></i> Dołącz do społeczności
+        </a>
+    </div>
+
+    <footer>
+        <p><i class="far fa-copyright"></i> Chinchilla Clicker — Twin Pixels Studio. Wszystkie prawa zastrzeżone. Gra wykorzystuje framework Electron.</p>
+        <p style="margin-top: 6px;">🔧 W razie problemów technicznych odwiedź <a href="https://twin-pixels-studio.itch.io/chinchilla" target="_blank" style="color: #b36b3a;">stronę na itch.io</a> lub napisz na Discordzie.</p>
+        <p>🐭 Klikaj mądrze i ciesz się futrzastym światem! 🐭</p>
+    </footer>
+</div>
+
+<script>
+    // Proste demo clickera (tylko lokalnie, wizualizacja mechaniki)
+    (function() {
+        let clickCount = 0;
+        const displaySpan = document.getElementById('clickCounterDisplay');
+        const clickBtn = document.getElementById('clickerMainBtn');
+        const resetBtn = document.getElementById('resetClickerBtn');
+
+        function updateDisplay() {
+            if (displaySpan) {
+                displaySpan.innerText = clickCount;
+                // Dodaj mini efekt "bounce" dla liczby
+                displaySpan.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    if(displaySpan) displaySpan.style.transform = 'scale(1)';
+                }, 100);
+            }
+        }
+
+        function handleClick() {
+            clickCount++;
+            updateDisplay();
+            // dodatkowy efekt wizualny przycisku + mała niespodzianka po 10 kliknięciach
+            if (clickCount === 10) {
+                const msg = document.createElement('div');
+                msg.innerText = '🎉 Brawo! W pełnej wersji dostajesz pierwszą nagrodę! 🎉';
+                msg.style.position = 'fixed';
+                msg.style.bottom = '20px';
+                msg.style.left = '50%';
+                msg.style.transform = 'translateX(-50%)';
+                msg.style.backgroundColor = '#f7d9b0';
+                msg.style.color = '#5a3a24';
+                msg.style.padding = '8px 20px';
+                msg.style.borderRadius = '50px';
+                msg.style.fontWeight = 'bold';
+                msg.style.zIndex = '999';
+                msg.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                msg.style.backdropFilter = 'blur(4px)';
+                document.body.appendChild(msg);
+                setTimeout(() => { msg.remove(); }, 2500);
+            } else if (clickCount === 25) {
+                const toast = document.createElement('div');
+                toast.innerText = '✨ Jesteś clickerowym mistrzem! ✨';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = '#e3b17c';
+                toast.style.color = '#2d241c';
+                toast.style.padding = '0.5rem 1.2rem';
+                toast.style.borderRadius = '60px';
+                toast.style.fontSize = '0.9rem';
+                toast.style.fontWeight = 'bold';
+                toast.style.zIndex = '999';
+                document.body.appendChild(toast);
+                setTimeout(() => { toast.remove(); }, 2000);
+            }
+        }
+
+        function resetCounter() {
+            clickCount = 0;
+            updateDisplay();
+            // elegancka notyfikacja resetu
+            const resetMsg = document.createElement('div');
+            resetMsg.innerText = '🧹 Licznik został zresetowany. Spróbuj pobić rekord!';
+            resetMsg.style.position = 'fixed';
+            resetMsg.style.bottom = '20px';
+            resetMsg.style.left = '50%';
+            resetMsg.style.transform = 'translateX(-50%)';
+            resetMsg.style.backgroundColor = '#ece0cf';
+            resetMsg.style.color = '#5c401f';
+            resetMsg.style.padding = '6px 18px';
+            resetMsg.style.borderRadius = '40px';
+            resetMsg.style.fontSize = '0.8rem';
+            resetMsg.style.zIndex = '999';
+            document.body.appendChild(resetMsg);
+            setTimeout(() => { resetMsg.remove(); }, 1500);
+        }
+
+        if (clickBtn) clickBtn.addEventListener('click', handleClick);
+        if (resetBtn) resetBtn.addEventListener('click', resetCounter);
+        updateDisplay();
+    })();
+
+    // dodatkowy efekt na kartach error codes i subtelne animacje
+    const errorCards = document.querySelectorAll('.error-card');
+    errorCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.borderLeftColor = '#f4a261';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.borderLeftColor = '#d68b45';
+        });
+    });
+</script>
+</body>
+</html>
