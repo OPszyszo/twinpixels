@@ -711,13 +711,13 @@
             // =========================================================
             //  ★ ZMIEŃ DATĘ TUTAJ ★
             //  Ustaw rok, miesiąc (0-11), dzień, godzinę, minutę, sekundę
-            //  Przykład: 2026, 6, 13, 18, 30, 0  →  13 lipca 2026, 18:30
+            //  Przykład: 2026, 6, 13, 20, 0, 0  →  13 lipca 2026, 20:00
             // =========================================================
             const TARGET_YEAR = 2026;
             const TARGET_MONTH = 6; // 0 = styczeń, 6 = lipiec
             const TARGET_DAY = 13;
-            const TARGET_HOUR = 18;
-            const TARGET_MINUTE = 30;
+            const TARGET_HOUR = 20;
+            const TARGET_MINUTE = 0;
             const TARGET_SECOND = 0;
             // =========================================================
 
@@ -742,7 +742,6 @@
 
                 // --- jeśli data minęła → pokaż OUT NOW ---
                 if (diff <= 0) {
-                    // ukryj licznik, pokaż OUT NOW
                     countdownGrid.classList.add('hidden');
                     outNowEl.classList.add('visible');
                     labelEl.textContent = '★ Available now! ★';
@@ -751,7 +750,6 @@
                 }
 
                 // --- w przeciwnym razie aktualizuj licznik ---
-                // upewnij się, że licznik jest widoczny, a OUT NOW ukryty
                 countdownGrid.classList.remove('hidden');
                 outNowEl.classList.remove('visible');
                 labelEl.classList.remove('outnow');
@@ -768,7 +766,6 @@
                 secondsEl.textContent = padZero(seconds);
             }
 
-            // sprawdzamy od razu i potem co sekundę
             updateCountdown();
             setInterval(updateCountdown, 1000);
         })();
