@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -404,7 +404,7 @@
             transform: rotate(-4deg) scale(1.05);
         }
 
-        /* ---------- FOOTER NAV (zakładki) ---------- */
+        /* ---------- FOOTER NAV (tabs) ---------- */
         .footer-nav {
             margin-top: 48px;
             padding-top: 28px;
@@ -542,76 +542,86 @@
 
         <!-- COUNTDOWN -->
         <div class="countdown-wrapper" id="countdown">
-            <div class="countdown-label">★ Do premiery pozostało ★</div>
+            <div class="countdown-label">★ Time until release ★</div>
             <div class="countdown-grid" id="countdownGrid">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">00</span>
-                    <span class="countdown-unit">Dni</span>
+                    <span class="countdown-unit">Days</span>
                 </div>
                 <div class="countdown-item">
                     <span class="countdown-number" id="hours">00</span>
-                    <span class="countdown-unit">Godz.</span>
+                    <span class="countdown-unit">Hours</span>
                 </div>
                 <div class="countdown-item">
                     <span class="countdown-number" id="minutes">00</span>
-                    <span class="countdown-unit">Min.</span>
+                    <span class="countdown-unit">Min</span>
                 </div>
                 <div class="countdown-item">
                     <span class="countdown-number" id="seconds">00</span>
-                    <span class="countdown-unit">Sek.</span>
+                    <span class="countdown-unit">Sec</span>
                 </div>
             </div>
         </div>
 
-        <!-- POBIERZ BUTTON -->
+        <!-- DOWNLOAD BUTTON -->
         <div class="btn-wrapper" id="download">
             <a href="https://twin-pixels-studio.itch.io/chinchilla" target="_blank" class="btn-primary">
-                ⬇ POBIERZ
+                ⬇ DOWNLOAD
             </a>
         </div>
 
-        <!-- NEWS SECTION -->
+        <!-- ============================================================
+             NEWS SECTION – edytuj daty i treści poniżej
+             ============================================================ -->
         <section class="news-section" id="news">
             <div class="news-header">
-                <h2 class="news-title"><span>📰</span> Aktualności</h2>
+                <h2 class="news-title"><span>📰</span> News</h2>
                 <a href="https://twin-pixels-studio.itch.io/chinchilla/devlog" target="_blank" class="btn-devlog">
-                    Zobacz Devlog →
+                    See Devlog →
                 </a>
             </div>
 
             <div class="news-items">
+                <!-- NEWS 1 – zmień datę i treść -->
                 <div class="news-item">
-                    <div class="date">15 lipca 2026</div>
-                    <div class="content">⚡ Dodano nowy poziom — „Migotliwy Las”. Przygotuj się na nowe wyzwania!</div>
+                    <div class="date">July 13, 2026</div>
+                    <div class="content">NEW VERSION CAN BE TODAY OR TOMMOROW!</div>
                 </div>
+
+                <!-- NEWS 2 – zmień datę i treść -->
                 <div class="news-item">
-                    <div class="date">8 lipca 2026</div>
-                    <div class="content">🎮 Poprawki wydajności oraz nowe osiągnięcia do odblokowania.</div>
+                    <div class="date">July 11, 2026</div>
+                    <div class="content">LINUX SUPPORT — Download latest version. For Linux/Windows!</div>
                 </div>
+
+                <!-- NEWS 3 – zmień datę i treść -->
                 <div class="news-item">
-                    <div class="date">1 lipca 2026</div>
-                    <div class="content">📢 Zapowiedź aktualizacji 1.5 — nowe zwierzaki i ulepszenia systemu walki!</div>
+                    <div class="date">July 8, 2026</div>
+                    <div class="content">1.5 Delayed, again.</div>
                 </div>
             </div>
         </section>
+        <!-- ============================================================
+             KONIEC SEKCJI NEWS
+             ============================================================ -->
 
         <!-- DISCORD -->
         <div class="discord-link" id="discord">
             <a href="https://discord.gg/ZY7uyEWbCs" target="_blank" rel="noopener noreferrer">
-                <!-- Discord SVG (simple, no gradient) -->
+                <!-- Discord SVG -->
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 8.046-.32 11.58.099 15.065a.078.078 0 0 0 .031.055 19.91 19.91 0 0 0 5.993 3.01.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.01.077.077 0 0 0 .032-.054c.5-3.998-.838-7.512-3.549-10.668a.06.06 0 0 0-.032-.027zM8.02 13.82c-1.18 0-2.15-1.08-2.15-2.4 0-1.32.95-2.4 2.15-2.4 1.19 0 2.15 1.08 2.15 2.4 0 1.32-.96 2.4-2.15 2.4zm7.96 0c-1.18 0-2.15-1.08-2.15-2.4 0-1.32.95-2.4 2.15-2.4 1.19 0 2.15 1.08 2.15 2.4 0 1.32-.96 2.4-2.15 2.4z"/>
                 </svg>
-                Dołącz na Discord
+                Join Discord
             </a>
         </div>
 
-        <!-- FOOTER NAV (zakładki) -->
+        <!-- FOOTER NAV (tabs) -->
         <nav class="footer-nav">
-            <a href="#top">🏠 Na górę</a>
-            <a href="#countdown">⏳ Odliczanie</a>
-            <a href="#download">⬇ Pobierz</a>
-            <a href="#news">📰 Newsy</a>
+            <a href="#top">🏠 Top</a>
+            <a href="#countdown">⏳ Countdown</a>
+            <a href="#download">⬇ Download</a>
+            <a href="#news">📰 News</a>
             <a href="#discord">💬 Discord</a>
         </nav>
 
@@ -620,8 +630,8 @@
     <!-- COUNTDOWN SCRIPT -->
     <script>
         (function() {
-            // Data docelowa: 13 lipca 2026, 16:30
-            const target = new Date(2026, 6, 13, 16, 30, 0, 0); // miesiące 0-11
+            // Target: July 13, 2026, 16:30
+            const target = new Date(2026, 6, 13, 16, 30, 0, 0);
 
             const daysEl = document.getElementById('days');
             const hoursEl = document.getElementById('hours');
