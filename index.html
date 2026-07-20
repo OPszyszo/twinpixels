@@ -275,6 +275,38 @@
             }
         }
 
+        /* ---------- BUTTON WIKI (NEW) ---------- */
+        .btn-wiki-wrapper {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: btnFade 1.0s ease 0.6s backwards;
+        }
+
+        .btn-wiki {
+            display: inline-block;
+            background: #e8e0d6;
+            color: #1a1a2e;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 14px 42px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 2px solid #d5cbbd;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-wiki:hover {
+            background: #d5cbbd;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            border-color: #1a1a2e;
+        }
+
+        .btn-wiki:active {
+            transform: translateY(0px);
+        }
+
         /* ---------- NEWS SECTION ---------- */
         .news-section {
             border-top: 2px solid #e8e0d6;
@@ -506,6 +538,22 @@
             transform: translateY(0px);
         }
 
+        .footer-nav a.wiki-link {
+            background: #1a1a2e;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 30px;
+            border-bottom: none;
+            font-weight: 600;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .footer-nav a.wiki-link:hover {
+            background: #2a2a44;
+            transform: translateY(-3px);
+            border-bottom: none;
+        }
+
         /* ---------- RESPONSIVE ---------- */
         @media (max-width: 700px) {
             .container {
@@ -542,6 +590,11 @@
             .btn-primary {
                 font-size: 1.1rem;
                 padding: 14px 36px;
+            }
+
+            .btn-wiki {
+                font-size: 0.95rem;
+                padding: 12px 28px;
             }
 
             .news-title {
@@ -601,6 +654,11 @@
                 font-size: 0.95rem;
                 padding: 12px 24px;
             }
+
+            .btn-wiki {
+                font-size: 0.85rem;
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
@@ -646,8 +704,13 @@
             </a>
         </div>
 
+        <!-- ===== NEW: WIKIPEDIA BUTTON ===== -->
+        <div class="btn-wiki-wrapper">
+            <a href="wiki.html" class="btn-wiki">📖 Wikipedia</a>
+        </div>
+
         <!-- ============================================================
-             NEWS SECTION – edytuj daty i treści poniżej
+             NEWS SECTION – edit dates and content below
              ============================================================ -->
         <section class="news-section" id="news">
             <div class="news-header">
@@ -658,19 +721,19 @@
             </div>
 
             <div class="news-items">
-                <!-- NEWS 1 – zmień datę i treść -->
+                <!-- NEWS 1 – change date and content -->
                 <div class="news-item">
                     <div class="date">July 13, 2026</div>
-                    <div class="content">NEW VERSION CAN BE TODAY OR TOMMOROW!</div>
+                    <div class="content">NEW VERSION CAN BE TODAY OR TOMORROW!</div>
                 </div>
 
-                <!-- NEWS 2 – zmień datę i treść -->
+                <!-- NEWS 2 – change date and content -->
                 <div class="news-item">
                     <div class="date">July 11, 2026</div>
                     <div class="content">LINUX SUPPORT — Download latest version. For Linux/Windows!</div>
                 </div>
 
-                <!-- NEWS 3 – zmień datę i treść -->
+                <!-- NEWS 3 – change date and content -->
                 <div class="news-item">
                     <div class="date">July 8, 2026</div>
                     <div class="content">1.5 Delayed, again.</div>
@@ -678,7 +741,7 @@
             </div>
         </section>
         <!-- ============================================================
-             KONIEC SEKCJI NEWS
+             END NEWS SECTION
              ============================================================ -->
 
         <!-- DISCORD -->
@@ -699,6 +762,7 @@
             <a href="#download">⬇ Download</a>
             <a href="#news">📰 News</a>
             <a href="#discord">💬 Discord</a>
+            <a href="wiki.html" class="wiki-link">📖 Wikipedia</a>
         </nav>
 
     </div>
@@ -709,12 +773,12 @@
     <script>
         (function() {
             // =========================================================
-            //  ★ ZMIEŃ DATĘ TUTAJ ★
-            //  Ustaw rok, miesiąc (0-11), dzień, godzinę, minutę, sekundę
-            //  Przykład: 2026, 6, 13, 20, 0, 0  →  13 lipca 2026, 20:00
+            //  ★ CHANGE THE DATE HERE ★
+            //  Set year, month (0-11), day, hour, minute, second
+            //  Example: 2026, 6, 13, 20, 0, 0  →  July 13, 2026, 20:00
             // =========================================================
             const TARGET_YEAR = 2026;
-            const TARGET_MONTH = 6; // 0 = styczeń, 6 = lipiec
+            const TARGET_MONTH = 6; // 0 = January, 6 = July
             const TARGET_DAY = 13;
             const TARGET_HOUR = 20;
             const TARGET_MINUTE = 0;
@@ -740,7 +804,7 @@
                 const current = new Date().getTime();
                 const diff = target.getTime() - current;
 
-                // --- jeśli data minęła → pokaż OUT NOW ---
+                // --- if date has passed → show OUT NOW ---
                 if (diff <= 0) {
                     countdownGrid.classList.add('hidden');
                     outNowEl.classList.add('visible');
@@ -749,7 +813,7 @@
                     return;
                 }
 
-                // --- w przeciwnym razie aktualizuj licznik ---
+                // --- otherwise update the counter ---
                 countdownGrid.classList.remove('hidden');
                 outNowEl.classList.remove('visible');
                 labelEl.classList.remove('outnow');
