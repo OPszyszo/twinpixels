@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chinchilla Clicker — Wikipedia</title>
+    <style>
+        /* ---------- RESET & BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f4f1ea;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: #1a1a2e;
+        }
+
+        .wiki-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px 40px 30px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8e0d6;
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- HEADER ---------- */
+        .wiki-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #dcd3c6;
+            margin-bottom: 28px;
+        }
+
+        .wiki-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wiki-header h1 span {
+            font-size: 1.8rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #ffffff;
+            font-size: 1.0rem;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 0 #0d0d1a;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background: #2a2a44;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #0d0d1a;
+        }
+
+        .btn-back:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #0d0d1a;
+        }
+
+        /* ---------- TABS ---------- */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid #e8e0d6;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #7a6e5e;
+            cursor: pointer;
+            border-radius: 30px 30px 0 0;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: #f0ebe4;
+            color: #1a1a2e;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            color: #1a1a2e;
+            background: #f4f1ea;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: #1a1a2e;
+            border-radius: 4px;
+        }
+
+        /* ---------- TAB CONTENT ---------- */
+        .tab-content {
+            display: none;
+            animation: tabFade 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes tabFade {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #1a1a2e;
+            letter-spacing: -0.3px;
+        }
+
+        .tab-content h2 .badge {
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: #e8e0d6;
+            padding: 4px 14px;
+            border-radius: 30px;
+            color: #1a1a2e;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .tab-content p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #2d2d44;
+            margin-bottom: 18px;
+        }
+
+        .tab-content ul {
+            margin-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tab-content ul li {
+            font-size: 1.0rem;
+            line-height: 1.7;
+            color: #2d2d44;
+            margin-bottom: 6px;
+        }
+
+        /* ---------- BATTLE MODE SKIN CARDS ---------- */
+        .rarity-section {
+            margin-bottom: 36px;
+        }
+
+        .rarity-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .rarity-rare .rarity-title {
+            background: #d4e0f0;
+            color: #1a3a5a;
+        }
+        .rarity-epic .rarity-title {
+            background: #d4b8e8;
+            color: #3a1a5a;
+        }
+        .rarity-mythic .rarity-title {
+            background: #f5d8a0;
+            color: #5a3a1a;
+        }
+        .rarity-legendary .rarity-title {
+            background: #f5c8b0;
+            color: #5a2a1a;
+        }
+        .rarity-chromatic .rarity-title {
+            background: linear-gradient(135deg, #f7d8e8, #d8e8f7);
+            color: #1a1a3a;
+            border: 2px solid #c8a8d8;
+        }
+
+        .skin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .skin-card {
+            background: #f8f5f0;
+            border-radius: 14px;
+            padding: 18px 20px 16px;
+            border-left: 4px solid #1a1a2e;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .skin-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .skin-card .skin-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 2px;
+        }
+
+        .skin-card .skin-sub {
+            font-size: 0.8rem;
+            color: #7a6e5e;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .skin-card .skin-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+            font-size: 0.92rem;
+            color: #2d2d44;
+            margin-bottom: 6px;
+        }
+
+        .skin-card .skin-stats span {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px solid #e8e0d6;
+        }
+
+        .skin-card .skin-stats .stat-label {
+            font-weight: 500;
+            color: #7a6e5e;
+        }
+
+        .skin-card .skin-stats .stat-value {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .skin-card .skin-ability {
+            font-size: 0.9rem;
+            color: #1a1a2e;
+            background: #ece6de;
+            padding: 6px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .skin-card .skin-desc {
+            font-size: 0.85rem;
+            color: #5a4e3e;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* ---------- RARITY BADGE ---------- */
+        .rarity-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 2px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .rarity-badge.rare {
+            background: #d4e0f0;
+            color: #1a3a5a;
+        }
+        .rarity-badge.epic {
+            background: #d4b8e8;
+            color: #3a1a5a;
+        }
+        .rarity-badge.mythic {
+            background: #f5d8a0;
+            color: #5a3a1a;
+        }
+        .rarity-badge.legendary {
+            background: #f5c8b0;
+            color: #5a2a1a;
+        }
+        .rarity-badge.chromatic {
+            background: linear-gradient(135deg, #f7d8e8, #d8e8f7);
+            color: #1a1a3a;
+            border: 1px solid #c8a8d8;
+        }
+
+        /* ---------- SUMMARY BOX ---------- */
+        .summary-box {
+            background: #f4f1ea;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-top: 24px;
+            border: 1px solid #e0d6c8;
+        }
+
+        .summary-box h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a2e;
+        }
+
+        .summary-box table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .summary-box table th,
+        .summary-box table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0d6c8;
+        }
+
+        .summary-box table th {
+            font-weight: 600;
+            color: #7a6e5e;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .summary-box table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .summary-box table td:first-child {
+            font-weight: 600;
+        }
+
+        /* ---------- TIPS ---------- */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .tip-card {
+            background: #f8f5f0;
+            border-radius: 12px;
+            padding: 16px 18px;
+            border-left: 4px solid #1a1a2e;
+        }
+
+        .tip-card .tip-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .tip-card .tip-desc {
+            font-size: 0.9rem;
+            color: #5a4e3e;
+            line-height: 1.5;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 800px) {
+            .wiki-wrapper {
+                padding: 28px 18px 20px;
+            }
+
+            .wiki-header h1 {
+                font-size: 1.7rem;
+            }
+
+            .btn-back {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+
+            .tab-btn {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+            }
+
+            .skin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .rarity-title {
+                font-size: 1.2rem;
+                padding: 8px 16px;
+            }
+
+            .summary-box table {
+                font-size: 0.8rem;
+            }
+
+            .summary-box table th,
+            .summary-box table td {
+                padding: 6px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wiki-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .wiki-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+
+            .skin-card .skin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f1ea;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d5cbbd;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b8aa98;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wiki-wrapper">
+
+        <!-- HEADER -->
+        <div class="wiki-header">
+            <h1>
+                <span>📖</span> Chinchilla Wiki
+            </h1>
+            <a href="index.html" class="btn-back">← Back to Game</a>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs" id="tabNav">
+            <button class="tab-btn active" data-tab="battlemode">⚔️ BattleMode</button>
+            <button class="tab-btn" data-tab="downloading">⬇ Downloading</button>
+            <button class="tab-btn" data-tab="skins">🎨 Skins</button>
+            <button class="tab-btn" data-tab="shop">🛒 Shop &amp; Offers</button>
+        </div>
+
+        <!-- ============================================================
+        TAB 1: BATTLE MODE
+        ============================================================ -->
+        <div class="tab-content active" id="tab-battlemode">
+
+            <h2>⚔️ Battle Mode <span class="badge">46 skins</span></h2>
+            <p>
+                <strong>SKIN SPECIFICATIONS FOR BATTLE MODE</strong><br />
+                All statistics for 46 skins used in battle mode.
+                Skins are sorted from weakest to strongest based on total power (HP + Attack + Defense + Speed).
+            </p>
+
+            <div style="background:#f4f1ea; border-radius:12px; padding:14px 20px; margin-bottom:24px; border-left:5px solid #1a1a2e;">
+                <p style="font-size:0.95rem; margin:0;">
+                    <strong>LEGEND:</strong>
+                    <span style="display:inline-block; margin:0 8px;">•</span> HP: Health Points
+                    <span style="display:inline-block; margin:0 8px;">•</span> Attack: Attack power
+                    <span style="display:inline-block; margin:0 8px;">•</span> Defense: Defense power
+                    <span style="display:inline-block; margin:0 8px;">•</span> Speed: Combat speed
+                    <span style="display:inline-block; margin:0 8px;">•</span> Rarity: Rare / Epic / Mythic / Legendary / Chromatic
+                    <span style="display:inline-block; margin:0 8px;">•</span> Special Ability: Unique skill
+                </p>
+            </div>
+
+            <!-- ===== RARE ===== -->
+            <div class="rarity-section rarity-rare">
+                <div class="rarity-title">⬡ Rare <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">18 skins</span></div>
+                <div class="skin-grid">
+                    <!-- 1. Classic Chinchilla -->
+                    <div class="skin-card">
+                        <div class="skin-name">Classic Chinchilla <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">default</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">100</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">10</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">10</span></span>
+                        </div>
+                        <div class="skin-ability">None</div>
+                        <div class="skin-desc">Classic chinchilla — the basic warrior. Balanced stats.</div>
+                    </div>
+
+                    <!-- 2. Egg -->
+                    <div class="skin-card">
+                        <div class="skin-name">Egg <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">skin_ai_02_egg</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">80</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">8</span></span>
+                        </div>
+                        <div class="skin-ability">Shell Shield</div>
+                        <div class="skin-desc">Delicate egg with surprising durability. Increases defense by 30% for 1 turn.</div>
+                    </div>
+
+                    <!-- 3. Pirate -->
+                    <div class="skin-card">
+                        <div class="skin-name">Pirate <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">skin_ai_05_pirate</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">95</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">10</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">11</span></span>
+                        </div>
+                        <div class="skin-ability">Hook Attack</div>
+                        <div class="skin-desc">Brave pirate with a hook instead of a hand. Hook attack dealing 120% damage.</div>
+                    </div>
+
+                    <!-- 4. Chef -->
+                    <div class="skin-card">
+                        <div class="skin-name">Chef <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">skin_ai_08_chef</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">90</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">11</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">9</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Food Fight</div>
+                        <div class="skin-desc">Chef fighting with kitchen tools. Throws food dealing 115% damage.</div>
+                    </div>
+
+                    <!-- 5. Viking -->
+                    <div class="skin-card">
+                        <div class="skin-name">Viking <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">skin_ai_09_viking</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">115</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">9</span></span>
+                        </div>
+                        <div class="skin-ability">Berserker Rage</div>
+                        <div class="skin-desc">Furious warrior from the north. Increases attack by 30% at the cost of 20% defense.</div>
+                    </div>
+
+                    <!-- 6. Lifeguard -->
+                    <div class="skin-card">
+                        <div class="skin-name">Lifeguard <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">summer_lifeguard</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">110</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">10</span></span>
+                        </div>
+                        <div class="skin-ability">Rescue</div>
+                        <div class="skin-desc">Lifeguard ready for action. Heals an ally for 15% HP.</div>
+                    </div>
+
+                    <!-- 7. Wave Rider -->
+                    <div class="skin-card">
+                        <div class="skin-name">Wave Rider <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">summer_wave_rider</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">92</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">9</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">16</span></span>
+                        </div>
+                        <div class="skin-ability">Wave Crash</div>
+                        <div class="skin-desc">Surfer mastering the waves. Strikes with a wave dealing 125% damage.</div>
+                    </div>
+
+                    <!-- 8. Pizza -->
+                    <div class="skin-card">
+                        <div class="skin-name">Pizza <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_001_pizza</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">85</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Cheese Throw</div>
+                        <div class="skin-desc">Delicious pepperoni pizza. Throws cheese to slow down the enemy.</div>
+                    </div>
+
+                    <!-- 9. Sushi -->
+                    <div class="skin-card">
+                        <div class="skin-name">Sushi <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_002_sushi</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">82</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">7</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Wasabi Burn</div>
+                        <div class="skin-desc">Fresh sushi with wasabi. Wasabi attack dealing 120% damage.</div>
+                    </div>
+
+                    <!-- 10. Robot (Rare) -->
+                    <div class="skin-card">
+                        <div class="skin-name">Robot <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_003_robot</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">108</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">11</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">8</span></span>
+                        </div>
+                        <div class="skin-ability">Repair</div>
+                        <div class="skin-desc">Small helper robot. Repairs 20% of own HP.</div>
+                    </div>
+
+                    <!-- 11. Viking (v15) -->
+                    <div class="skin-card">
+                        <div class="skin-name">Viking <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_004_viking</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">112</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">9</span></span>
+                        </div>
+                        <div class="skin-ability">Axe Swing</div>
+                        <div class="skin-desc">Viking with an axe. Powerful axe swing dealing 130% damage.</div>
+                    </div>
+
+                    <!-- 12. Donut -->
+                    <div class="skin-card">
+                        <div class="skin-name">Donut <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_005_donut</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">78</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">6</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">15</span></span>
+                        </div>
+                        <div class="skin-ability">Sugar Rush</div>
+                        <div class="skin-desc">Sweet glazed donut. Increases speed by 40% for 1 turn.</div>
+                    </div>
+
+                    <!-- 13. Icecream -->
+                    <div class="skin-card">
+                        <div class="skin-name">Icecream <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_006_icecream</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">80</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">7</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Freeze</div>
+                        <div class="skin-desc">Cold ice cream in a cone. Freezes the enemy for 1 turn.</div>
+                    </div>
+
+                    <!-- 14. Taco -->
+                    <div class="skin-card">
+                        <div class="skin-name">Taco <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_007_taco</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">86</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">9</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Spicy Sauce</div>
+                        <div class="skin-desc">Mexican taco with spicy sauce. Spicy sauce dealing 125% damage.</div>
+                    </div>
+
+                    <!-- 15. Ramen -->
+                    <div class="skin-card">
+                        <div class="skin-name">Ramen <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_008_ramen</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">90</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">10</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">11</span></span>
+                        </div>
+                        <div class="skin-ability">Noodle Slap</div>
+                        <div class="skin-desc">Japanese ramen with egg. Slaps with noodles dealing 115% damage.</div>
+                    </div>
+
+                    <!-- 16. Fries -->
+                    <div class="skin-card">
+                        <div class="skin-name">Fries <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">v15_rare_009_fries</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">84</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Salt Attack</div>
+                        <div class="skin-desc">Crispy fries with salt. Throws salt dealing 110% damage.</div>
+                    </div>
+
+                    <!-- 17. Jade -->
+                    <div class="skin-card">
+                        <div class="skin-name">Jade <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">new_skin_05_jade</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">98</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">11</span></span>
+                        </div>
+                        <div class="skin-ability">Jade Shield</div>
+                        <div class="skin-desc">Jade chinchilla with stone. Jade shield absorbing 25% damage.</div>
+                    </div>
+
+                    <!-- 18. Venom -->
+                    <div class="skin-card">
+                        <div class="skin-name">Venom <span class="rarity-badge rare">Rare</span></div>
+                        <div class="skin-sub">new_skin_09_venom</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">89</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Poison Bite</div>
+                        <div class="skin-desc">Venomous chinchilla with poison. Poison bite dealing 120% damage and poison.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== EPIC ===== -->
+            <div class="rarity-section rarity-epic">
+                <div class="rarity-title">⬡ Epic <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">11 skins</span></div>
+                <div class="skin-grid">
+                    <!-- 19. Skater -->
+                    <div class="skin-card">
+                        <div class="skin-name">Skater <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">skin_special_skater</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">90</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">7</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">18</span></span>
+                        </div>
+                        <div class="skin-ability">Speed Boost</div>
+                        <div class="skin-desc">Fast skater on a skateboard. Increases speed by 50% for 2 turns.</div>
+                    </div>
+
+                    <!-- 20. Ninja -->
+                    <div class="skin-card">
+                        <div class="skin-name">Ninja <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">skin_ai_03_ninja</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">85</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">18</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">6</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">20</span></span>
+                        </div>
+                        <div class="skin-ability">Shadow Strike</div>
+                        <div class="skin-desc">Silent assassin from the shadows. Fast attack ignoring 50% of enemy defense.</div>
+                    </div>
+
+                    <!-- 21. Robot (Epic) -->
+                    <div class="skin-card">
+                        <div class="skin-name">Robot <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">skin_ai_04_robot</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">110</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">7</span></span>
+                        </div>
+                        <div class="skin-ability">Metal Shield</div>
+                        <div class="skin-desc">Mechanical warrior with metal armor. Increases defense by 40% for 2 turns.</div>
+                    </div>
+
+                    <!-- 22. Knight -->
+                    <div class="skin-card">
+                        <div class="skin-name">Knight <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">skin_ai_07_knight</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">130</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">20</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">6</span></span>
+                        </div>
+                        <div class="skin-ability">Shield Bash</div>
+                        <div class="skin-desc">Honorable knight in heavy armor. Shield deals 110% damage and stuns for 1 turn.</div>
+                    </div>
+
+                    <!-- 23. Devil -->
+                    <div class="skin-card">
+                        <div class="skin-name">Devil <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">skin_ai_12_devil</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">100</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">19</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">10</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Hellfire</div>
+                        <div class="skin-desc">Demon from hell with horns. Fire attack dealing 130% damage.</div>
+                    </div>
+
+                    <!-- 24. Beach Party -->
+                    <div class="skin-card">
+                        <div class="skin-name">Beach Party <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">summer_beach_party</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">88</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">15</span></span>
+                        </div>
+                        <div class="skin-ability">Party Time</div>
+                        <div class="skin-desc">Chinchilla at the beach in a good mood. Increases all allies' speed by 10%.</div>
+                    </div>
+
+                    <!-- 25. Frost -->
+                    <div class="skin-card">
+                        <div class="skin-name">Frost <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">new_skin_01_frost</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">95</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">17</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Ice Shard</div>
+                        <div class="skin-desc">Winter chinchilla with an icy aura. Launches ice shards dealing 135% damage.</div>
+                    </div>
+
+                    <!-- 26. Ember -->
+                    <div class="skin-card">
+                        <div class="skin-name">Ember <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">new_skin_02_ember</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">93</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">18</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">11</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">15</span></span>
+                        </div>
+                        <div class="skin-ability">Ember Burst</div>
+                        <div class="skin-desc">Glowing chinchilla with fire. Ember burst dealing 140% damage.</div>
+                    </div>
+
+                    <!-- 27. Crimson -->
+                    <div class="skin-card">
+                        <div class="skin-name">Crimson <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">new_skin_04_crimson</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">91</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">10</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">16</span></span>
+                        </div>
+                        <div class="skin-ability">Blood Pact</div>
+                        <div class="skin-desc">Crimson chinchilla with blood. Sacrifices 10% HP to deal 145% damage.</div>
+                    </div>
+
+                    <!-- 28. Lunar -->
+                    <div class="skin-card">
+                        <div class="skin-name">Lunar <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">new_skin_08_lunar</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">94</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">11</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">15</span></span>
+                        </div>
+                        <div class="skin-ability">Lunar Beam</div>
+                        <div class="skin-desc">Moon chinchilla with lunar energy. Moon beam dealing 130% damage.</div>
+                    </div>
+
+                    <!-- 29. Crystal -->
+                    <div class="skin-card">
+                        <div class="skin-name">Crystal <span class="rarity-badge epic">Epic</span></div>
+                        <div class="skin-sub">new_skin_10_crystal</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">96</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Crystal Shard</div>
+                        <div class="skin-desc">Crystal chinchilla with crystal. Crystal shards dealing 135% damage.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== MYTHIC ===== -->
+            <div class="rarity-section rarity-mythic">
+                <div class="rarity-title">⬡ Mythic <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">4 skins</span></div>
+                <div class="skin-grid">
+                    <!-- 30. Wizard -->
+                    <div class="skin-card">
+                        <div class="skin-name">Wizard <span class="rarity-badge mythic">Mythic</span></div>
+                        <div class="skin-sub">skin_ai_06_wizard</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">75</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">25</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Fireball</div>
+                        <div class="skin-desc">Powerful mage mastering the secrets of the arcane. Launches a fireball dealing 140% damage.</div>
+                    </div>
+
+                    <!-- 31. Angel -->
+                    <div class="skin-card">
+                        <div class="skin-name">Angel <span class="rarity-badge mythic">Mythic</span></div>
+                        <div class="skin-sub">skin_ai_11_angel</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">95</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">18</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">12</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">16</span></span>
+                        </div>
+                        <div class="skin-ability">Divine Heal</div>
+                        <div class="skin-desc">Heavenly being with a halo. Heals 25% HP at the end of the turn.</div>
+                    </div>
+
+                    <!-- 32. Phantom -->
+                    <div class="skin-card">
+                        <div class="skin-name">Phantom <span class="rarity-badge mythic">Mythic</span></div>
+                        <div class="skin-sub">new_skin_06_phantom</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">87</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">22</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">9</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">17</span></span>
+                        </div>
+                        <div class="skin-ability">Phantom Phase</div>
+                        <div class="skin-desc">Ghost chinchilla with spectral power. Becomes invisible for 1 turn, evading attacks.</div>
+                    </div>
+
+                    <!-- 33. Shadow -->
+                    <div class="skin-card">
+                        <div class="skin-name">Shadow <span class="rarity-badge mythic">Mythic</span></div>
+                        <div class="skin-sub">new_skin_11_shadow</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">85</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">21</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">8</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">18</span></span>
+                        </div>
+                        <div class="skin-ability">Shadow Step</div>
+                        <div class="skin-desc">Shadow chinchilla with shadow power. Teleports behind the enemy and deals 140% damage.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LEGENDARY ===== -->
+            <div class="rarity-section rarity-legendary">
+                <div class="rarity-title">⬡ Legendary <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">16 skins</span></div>
+                <div class="skin-grid">
+                    <!-- 34. Galactic -->
+                    <div class="skin-card">
+                        <div class="skin-name">Galactic <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">skin_ai_01_galaxy</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">120</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">22</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Cosmic Blast</div>
+                        <div class="skin-desc">Cosmic being from the galaxy. Unleashes a wave of cosmic energy dealing 150% damage.</div>
+                    </div>
+
+                    <!-- 35. Astronaut -->
+                    <div class="skin-card">
+                        <div class="skin-name">Astronaut <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">skin_ai_10_astronaut</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">105</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">20</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Zero Gravity</div>
+                        <div class="skin-desc">Cosmonaut with advanced gear. Floats in the air, evading 30% of attacks.</div>
+                    </div>
+
+                    <!-- 36. Sunset Vibe -->
+                    <div class="skin-card">
+                        <div class="skin-name">Sunset Vibe <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">summer_sunset_vibe</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">108</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">21</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">13</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Sunset Beam</div>
+                        <div class="skin-desc">Chinchilla at sunset with a magical aura. Fires a sunset beam dealing 145% damage.</div>
+                    </div>
+
+                    <!-- 37. Astral Crown -->
+                    <div class="skin-card">
+                        <div class="skin-name">Astral Crown <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_01</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">125</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">24</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">18</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">11</span></span>
+                        </div>
+                        <div class="skin-ability">Star Power</div>
+                        <div class="skin-desc">Cosmic crown of stars. Increases attack by 35% for 2 turns.</div>
+                    </div>
+
+                    <!-- 38. Void Emperor -->
+                    <div class="skin-card">
+                        <div class="skin-name">Void Emperor <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_02</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">130</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">26</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">10</span></span>
+                        </div>
+                        <div class="skin-ability">Void Drain</div>
+                        <div class="skin-desc">Emperor of the void with a dark aura. Gains 15% HP from damage dealt.</div>
+                    </div>
+
+                    <!-- 39. Solar Breaker -->
+                    <div class="skin-card">
+                        <div class="skin-name">Solar Breaker <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_03</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">122</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">28</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Solar Flare</div>
+                        <div class="skin-desc">Solar warrior with the power of the sun. Unleashes a solar flare dealing 155% damage.</div>
+                    </div>
+
+                    <!-- 40. Royal Nova -->
+                    <div class="skin-card">
+                        <div class="skin-name">Royal Nova <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_04</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">135</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">23</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">20</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">9</span></span>
+                        </div>
+                        <div class="skin-ability">Royal Guard</div>
+                        <div class="skin-desc">Royal warrior with a new aura. Increases defense by 50% for 2 turns.</div>
+                    </div>
+
+                    <!-- 41. Prismatic Apex -->
+                    <div class="skin-card">
+                        <div class="skin-name">Prismatic Apex <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_05</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">118</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">27</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Prism Beam</div>
+                        <div class="skin-desc">Prismatic peak with rainbow colors. Fires a prism beam dealing 150% damage.</div>
+                    </div>
+
+                    <!-- 42. Infernal Halo -->
+                    <div class="skin-card">
+                        <div class="skin-name">Infernal Halo <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_06</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">128</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">29</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">17</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">11</span></span>
+                        </div>
+                        <div class="skin-ability">Inferno</div>
+                        <div class="skin-desc">Hellish halo with fire. Fire dealing 160% damage and burning.</div>
+                    </div>
+
+                    <!-- 43. Aurora Titan -->
+                    <div class="skin-card">
+                        <div class="skin-name">Aurora Titan <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_07</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">140</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">25</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">22</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">8</span></span>
+                        </div>
+                        <div class="skin-ability">Aurora Shield</div>
+                        <div class="skin-desc">Aurora titan with northern lights. Aurora shield absorbing 40% damage.</div>
+                    </div>
+
+                    <!-- 44. Nebula Fang -->
+                    <div class="skin-card">
+                        <div class="skin-name">Nebula Fang <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_08</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">126</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">30</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Nebula Strike</div>
+                        <div class="skin-desc">Nebula fang with cosmic power. Cosmic strike dealing 165% damage.</div>
+                    </div>
+
+                    <!-- 45. Myth Pulse -->
+                    <div class="skin-card">
+                        <div class="skin-name">Myth Pulse <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_09</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">124</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">31</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Mythical Power</div>
+                        <div class="skin-desc">Mythic pulse with ancient power. Increases all stats by 20% for 1 turn.</div>
+                    </div>
+
+                    <!-- 46. Legend Bloom -->
+                    <div class="skin-card">
+                        <div class="skin-name">Legend Bloom <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">v15_elite_10</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">145</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">32</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">24</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">9</span></span>
+                        </div>
+                        <div class="skin-ability">Bloom Burst</div>
+                        <div class="skin-desc">Legendary bloom with floral power. Flower burst dealing 170% damage.</div>
+                    </div>
+
+                    <!-- 47. Storm -->
+                    <div class="skin-card">
+                        <div class="skin-name">Storm <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">new_skin_03_storm</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">115</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">23</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">14</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">14</span></span>
+                        </div>
+                        <div class="skin-ability">Lightning Strike</div>
+                        <div class="skin-desc">Storm chinchilla with lightning. Lightning strike dealing 150% damage.</div>
+                    </div>
+
+                    <!-- 48. Solar -->
+                    <div class="skin-card">
+                        <div class="skin-name">Solar <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">new_skin_07_solar</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">120</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">24</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">16</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">12</span></span>
+                        </div>
+                        <div class="skin-ability">Solar Flare</div>
+                        <div class="skin-desc">Solar chinchilla with the power of the sun. Solar flare dealing 155% damage.</div>
+                    </div>
+
+                    <!-- 49. Aurora -->
+                    <div class="skin-card">
+                        <div class="skin-name">Aurora <span class="rarity-badge legendary">Legendary</span></div>
+                        <div class="skin-sub">new_skin_12_aurora</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">118</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">25</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">15</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">13</span></span>
+                        </div>
+                        <div class="skin-ability">Aurora Wave</div>
+                        <div class="skin-desc">Aurora borealis with northern lights. Aurora wave dealing 150% damage.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CHROMATIC ===== -->
+            <div class="rarity-section rarity-chromatic">
+                <div class="rarity-title">⬡ Chromatic <span style="font-weight:400; font-size:0.8rem; margin-left:10px;">1 skin</span></div>
+                <div class="skin-grid">
+                    <!-- 50. Rainbow -->
+                    <div class="skin-card" style="border-left-color:#c8a8d8; background:#f8f2fa;">
+                        <div class="skin-name">Rainbow <span class="rarity-badge chromatic">Chromatic</span></div>
+                        <div class="skin-sub">chromatic_01_rainbow</div>
+                        <div class="skin-stats">
+                            <span><span class="stat-label">HP</span><span class="stat-value">150</span></span>
+                            <span><span class="stat-label">Attack</span><span class="stat-value">35</span></span>
+                            <span><span class="stat-label">Defense</span><span class="stat-value">25</span></span>
+                            <span><span class="stat-label">Speed</span><span class="stat-value">15</span></span>
+                        </div>
+                        <div class="skin-ability">Rainbow Storm</div>
+                        <div class="skin-desc">Rainbow chinchilla with infinite power. Rainbow storm dealing 200% all-type damage.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SUMMARY ===== -->
+            <div class="summary-box">
+                <h3>📊 Skin Power Summary</h3>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:10px;">
+                    <div>
+                        <h4 style="font-size:0.95rem; margin-bottom:6px;">Strongest (total stats)</h4>
+                        <table>
+                            <tr><th>#</th><th>Skin</th><th>Rarity</th><th>Total</th></tr>
+                            <tr><td>1</td><td>Rainbow</td><td>Chromatic</td><td>225</td></tr>
+                            <tr><td>2</td><td>Legend Bloom</td><td>Legendary</td><td>210</td></tr>
+                            <tr><td>3</td><td>Infernal Halo</td><td>Legendary</td><td>185</td></tr>
+                            <tr><td>4</td><td>Nebula Fang</td><td>Legendary</td><td>184</td></tr>
+                            <tr><td>5</td><td>Myth Pulse</td><td>Legendary</td><td>183</td></tr>
+                            <tr><td>6</td><td>Void Emperor</td><td>Legendary</td><td>182</td></tr>
+                            <tr><td>7</td><td>Astral Crown</td><td>Legendary</td><td>178</td></tr>
+                            <tr><td>8</td><td>Solar Breaker</td><td>Legendary</td><td>177</td></tr>
+                            <tr><td>9</td><td>Prismatic Apex</td><td>Legendary</td><td>172</td></tr>
+                            <tr><td>10</td><td>Royal Nova</td><td>Legendary</td><td>187</td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="font-size:0.95rem; margin-bottom:6px;">Strongest (attack)</h4>
+                        <table>
+                            <tr><th>#</th><th>Skin</th><th>Rarity</th><th>Attack</th></tr>
+                            <tr><td>1</td><td>Rainbow</td><td>Chromatic</td><td>35</td></tr>
+                            <tr><td>2</td><td>Legend Bloom</td><td>Legendary</td><td>32</td></tr>
+                            <tr><td>3</td><td>Myth Pulse</td><td>Legendary</td><td>31</td></tr>
+                            <tr><td>4</td><td>Nebula Fang</td><td>Legendary</td><td>30</td></tr>
+                            <tr><td>5</td><td>Infernal Halo</td><td>Legendary</td><td>29</td></tr>
+                            <tr><td>6</td><td>Solar Breaker</td><td>Legendary</td><td>28</td></tr>
+                            <tr><td>7</td><td>Prismatic Apex</td><td>Legendary</td><td>27</td></tr>
+                            <tr><td>8</td><td>Void Emperor</td><td>Legendary</td><td>26</td></tr>
+                            <tr><td>9</td><td>Aurora</td><td>Legendary</td><td>25</td></tr>
+                            <tr><td>10</td><td>Astral Crown</td><td>Legendary</td><td>24</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:16px;">
+                    <div>
+                        <h4 style="font-size:0.95rem; margin-bottom:6px;">Strongest (defense)</h4>
+                        <table>
+                            <tr><th>#</th><th>Skin</th><th>Rarity</th><th>Defense</th></tr>
+                            <tr><td>1</td><td>Rainbow</td><td>Chromatic</td><td>25</td></tr>
+                            <tr><td>2</td><td>Legend Bloom</td><td>Legendary</td><td>24</td></tr>
+                            <tr><td>3</td><td>Aurora Titan</td><td>Legendary</td><td>22</td></tr>
+                            <tr><td>4</td><td>Royal Nova</td><td>Legendary</td><td>20</td></tr>
+                            <tr><td>5</td><td>Knight</td><td>Epic</td><td>20</td></tr>
+                            <tr><td>6</td><td>Astral Crown</td><td>Legendary</td><td>18</td></tr>
+                            <tr><td>7</td><td>Infernal Halo</td><td>Legendary</td><td>17</td></tr>
+                            <tr><td>8</td><td>Void Emperor</td><td>Legendary</td><td>16</td></tr>
+                            <tr><td>9</td><td>Galactic</td><td>Legendary</td><td>15</td></tr>
+                            <tr><td>10</td><td>Aurora</td><td>Legendary</td><td>15</td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="font-size:0.95rem; margin-bottom:6px;">Strongest (HP)</h4>
+                        <table>
+                            <tr><th>#</th><th>Skin</th><th>Rarity</th><th>HP</th></tr>
+                            <tr><td>1</td><td>Rainbow</td><td>Chromatic</td><td>150</td></tr>
+                            <tr><td>2</td><td>Legend Bloom</td><td>Legendary</td><td>145</td></tr>
+                            <tr><td>3</td><td>Aurora Titan</td><td>Legendary</td><td>140</td></tr>
+                            <tr><td>4</td><td>Royal Nova</td><td>Legendary</td><td>135</td></tr>
+                            <tr><td>5</td><td>Void Emperor</td><td>Legendary</td><td>130</td></tr>
+                            <tr><td>6</td><td>Infernal Halo</td><td>Legendary</td><td>128</td></tr>
+                            <tr><td>7</td><td>Nebula Fang</td><td>Legendary</td><td>126</td></tr>
+                            <tr><td>8</td><td>Astral Crown</td><td>Legendary</td><td>125</td></tr>
+                            <tr><td>9</td><td>Myth Pulse</td><td>Legendary</td><td>124</td></tr>
+                            <tr><td>10</td><td>Solar Breaker</td><td>Legendary</td><td>122</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="margin-top:16px;">
+                    <h4 style="font-size:0.95rem; margin-bottom:6px;">Strongest (speed)</h4>
+                    <table>
+                        <tr><th>#</th><th>Skin</th><th>Rarity</th><th>Speed</th></tr>
+                        <tr><td>1</td><td>Ninja</td><td>Epic</td><td>20</td></tr>
+                        <tr><td>2</td><td>Shadow</td><td>Mythic</td><td>18</td></tr>
+                        <tr><td>3</td><td>Skater</td><td>Epic</td><td>18</td></tr>
+                        <tr><td>4</td><td>Phantom</td><td>Mythic</td><td>17</td></tr>
+                        <tr><td>5</td><td>Crimson</td><td>Epic</td><td>16</td></tr>
+                        <tr><td>6</td><td>Wave Rider</td><td>Rare</td><td>16</td></tr>
+                        <tr><td>7</td><td>Donut</td><td>Rare</td><td>15</td></tr>
+                        <tr><td>8</td><td>Beach Party</td><td>Epic</td><td>15</td></tr>
+                        <tr><td>9</td><td>Ember</td><td>Epic</td><td>15</td></tr>
+                        <tr><td>10</td><td>Lunar</td><td>Epic</td><td>15</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== TIPS ===== -->
+            <div style="margin-top:28px;">
+                <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:12px;">💡 Tips for Players</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-title">🏆 Chromatic</div>
+                        <div class="tip-desc">Chromatic skins are the strongest and have the best abilities.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">⚔️ Legendary</div>
+                        <div class="tip-desc">Legendary skins are very strong and have powerful attacks.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">🌀 Mythic</div>
+                        <div class="tip-desc">Mythic skins have unique healing or invisibility abilities.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">⚖️ Epic</div>
+                        <div class="tip-desc">Epic skins are balanced and have useful abilities.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">🛡️ Rare</div>
+                        <div class="tip-desc">Rare skins are best for beginner players.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">🎯 For Attack</div>
+                        <div class="tip-desc">Pick skins with high attack: Rainbow, Legend Bloom, Myth Pulse.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">🛡️ For Defense</div>
+                        <div class="tip-desc">Pick skins with high defense: Rainbow, Legend Bloom, Aurora Titan.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">💨 For Speed</div>
+                        <div class="tip-desc">Pick skins with high speed: Ninja, Shadow, Phantom.</div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-title">❤️ For Stamina</div>
+                        <div class="tip-desc">Pick skins with high HP: Rainbow, Legend Bloom, Aurora Titan.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ===== END BATTLE MODE ===== -->
+
+        <!-- ============================================================
+        TAB 2: DOWNLOADING
+        ============================================================ -->
+        <div class="tab-content" id="tab-downloading">
+
+            <h2>⬇ Downloading</h2>
+
+            <p>
+                <strong>How to download and install Chinchilla Clicker 1.5</strong>
+            </p>
+
+            <div style="background:#f4f1ea; border-radius:14px; padding:20px 24px; margin-bottom:20px; border-left:5px solid #1a1a2e;">
+                <h3 style="font-size:1.1rem; margin-bottom:6px;">📦 System Requirements</h3>
+                <ul>
+                    <li><strong>OS:</strong> Windows 10/11, Linux (Ubuntu 20.04+, Steam Deck)</li>
+                    <li><strong>Processor:</strong> Intel Core i3 / AMD Ryzen 3 or equivalent</li>
+                    <li><strong>Memory:</strong> 4 GB RAM</li>
+                    <li><strong>Graphics:</strong> Integrated GPU (Intel HD 6000+ / AMD Radeon Vega)</li>
+                    <li><strong>Storage:</strong> 2 GB available space</li>
+                    <li><strong>Additional:</strong> Internet connection for updates and multiplayer</li>
+                </ul>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+                <div style="background:#f8f5f0; border-radius:14px; padding:18px 22px;">
+                    <h3 style="font-size:1.0rem; margin-bottom:6px;">🪟 Windows</h3>
+                    <ol style="margin-left:18px; font-size:0.95rem; line-height:1.7;">
+                        <li>Click the <strong>DOWNLOAD</strong> button on the main page.</li>
+                        <li>Download <code>Chinchilla_Clicker_1.5_Setup.exe</code>.</li>
+                        <li>Run the installer and follow the instructions.</li>
+                        <li>After installation, launch the game from the desktop or Start menu.</li>
+                    </ol>
+                </div>
+                <div style="background:#f8f5f0; border-radius:14px; padding:18px 22px;">
+                    <h3 style="font-size:1.0rem; margin-bottom:6px;">🐧 Linux</h3>
+                    <ol style="margin-left:18px; font-size:0.95rem; line-height:1.7;">
+                        <li>Click the <strong>DOWNLOAD</strong> button on the main page.</li>
+                        <li>Download <code>Chinchilla_Clicker_1.5_Linux.tar.gz</code>.</li>
+                        <li>Extract the archive: <code>tar -xzf Chinchilla_Clicker_1.5_Linux.tar.gz</code>.</li>
+                        <li>Run the executable <code>./Chinchilla</code> from the terminal or double-click it.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div style="background:#f0ebe4; border-radius:14px; padding:16px 20px; margin-bottom:12px;">
+                <p style="font-size:0.95rem; margin:0;">
+                    <strong>💡 Tip:</strong> If you have trouble running on Linux, make sure the file has execute permissions:
+                    <code style="background:#e0d6c8; padding:2px 10px; border-radius:6px;">chmod +x Chinchilla</code>
+                </p>
+            </div>
+
+            <div style="background:#f4f1ea; border-radius:14px; padding:18px 22px;">
+                <h3 style="font-size:1.0rem; margin-bottom:4px;">🔄 Updates</h3>
+                <p style="font-size:0.95rem; line-height:1.6;">
+                    The game automatically checks for new versions on startup.
+                    You can also manually check on the
+                    <a href="https://twin-pixels-studio.itch.io/chinchilla" target="_blank" style="color:#1a1a2e; font-weight:600;">itch.io</a>
+                    page or in the <strong>News</strong> section on the main page.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        TAB 3: SKINS
+        ============================================================ -->
+        <div class="tab-content" id="tab-skins">
+
+            <h2>🎨 Skins</h2>
+
+            <p>
+                <strong>Skin system in Chinchilla Clicker 1.5</strong>
+            </p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:16px; margin:20px 0;">
+                <div style="background:#d4e0f0; border-radius:12px; padding:16px 18px; text-align:center;">
+                    <div style="font-size:1.8rem; font-weight:700; color:#1a3a5a;">18</div>
+                    <div style="font-weight:600; color:#1a3a5a;">Rare</div>
+                    <div style="font-size:0.8rem; color:#2a4a6a;">Basic skins for beginners</div>
+                </div>
+                <div style="background:#d4b8e8; border-radius:12px; padding:16px 18px; text-align:center;">
+                    <div style="font-size:1.8rem; font-weight:700; color:#3a1a5a;">11</div>
+                    <div style="font-weight:600; color:#3a1a5a;">Epic</div>
+                    <div style="font-size:0.8rem; color:#4a2a6a;">Balanced skins with useful abilities</div>
+                </div>
+                <div style="background:#f5d8a0; border-radius:12px; padding:16px 18px; text-align:center;">
+                    <div style="font-size:1.8rem; font-weight:700; color:#5a3a1a;">4</div>
+                    <div style="font-weight:600; color:#5a3a1a;">Mythic</div>
+                    <div style="font-size:0.8rem; color:#6a4a2a;">Unique healing and invisibility abilities</div>
+                </div>
+                <div style="background:#f5c8b0; border-radius:12px; padding:16px 18px; text-align:center;">
+                    <div style="font-size:1.8rem; font-weight:700; color:#5a2a1a;">16</div>
+                    <div style="font-weight:600; color:#5a2a1a;">Legendary</div>
+                    <div style="font-size:0.8rem; color:#6a3a2a;">Powerful skins with devastating attacks</div>
+                </div>
+                <div style="background:linear-gradient(135deg,#f7d8e8,#d8e8f7); border-radius:12px; padding:16px 18px; text-align:center; border:2px solid #c8a8d8;">
+                    <div style="font-size:1.8rem; font-weight:700; color:#1a1a3a;">1</div>
+                    <div style="font-weight:600; color:#1a1a3a;">Chromatic</div>
+                    <div style="font-size:0.8rem; color:#2a2a4a;">The most powerful skin in the game</div>
+                </div>
+            </div>
+
+            <div style="background:#f4f1ea; border-radius:14px; padding:18px 22px; margin-bottom:18px;">
+                <h3 style="font-size:1.0rem; margin-bottom:6px;">🔓 How to unlock skins?</h3>
+                <ul style="font-size:0.95rem; line-height:1.7;">
+                    <li><strong>Rare:</strong> Available from the start or for a small amount of coins.</li>
+                    <li><strong>Epic:</strong> Unlocked through achievements or shop purchases.</li>
+                    <li><strong>Mythic:</strong> Special events, missions, or loot boxes.</li>
+                    <li><strong>Legendary:</strong> Difficult challenges, high level, or limited-time events.</li>
+                    <li><strong>Chromatic:</strong> Rarest — available only during special events or as a 100% completion reward.</li>
+                </ul>
+            </div>
+
+            <div style="background:#f0ebe4; border-radius:14px; padding:16px 20px;">
+                <h3 style="font-size:1.0rem; margin-bottom:4px;">⚡ Special Abilities</h3>
+                <p style="font-size:0.95rem; line-height:1.6;">
+                    Each skin in Battle Mode has a unique special ability that can change the course of battle.
+                    Abilities activate automatically under certain conditions or after pressing the appropriate button
+                    (depending on the game mode). Check the <strong>BattleMode</strong> tab for details.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        TAB 4: SHOP & OFFERS
+        ============================================================ -->
+        <div class="tab-content" id="tab-shop">
+
+            <h2>🛒 Shop &amp; Daily Offers</h2>
+
+            <p>
+                <strong>Shop in Chinchilla Clicker 1.5 — daily offers, currency, and items.</strong>
+            </p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:16px 0;">
+                <div style="background:#f8f5f0; border-radius:14px; padding:18px 22px;">
+                    <h3 style="font-size:1.0rem; margin-bottom:6px;">🪙 Currency</h3>
+                    <ul style="font-size:0.95rem; line-height:1.7;">
+                        <li><strong>Coins (🪙):</strong> Base currency — earned by clicking, challenges, and daily logins.</li>
+                        <li><strong>Diamonds (💎):</strong> Premium currency — for real money or rare achievements.</li>
+                        <li><strong>Event Tokens (🎟️):</strong> Special currency from limited-time events.</li>
+                    </ul>
+                </div>
+                <div style="background:#f8f5f0; border-radius:14px; padding:18px 22px;">
+                    <h3 style="font-size:1.0rem; margin-bottom:6px;">📦 Shop Items</h3>
+                    <ul style="font-size:0.95rem; line-height:1.7;">
+                        <li><strong>Skins:</strong> Unlock new appearances (Rare, Epic, Mythic, Legendary).</li>
+                        <li><strong>Boosts:</strong> Temporary buffs (xp, coins, speed).</li>
+                        <li><strong>Loot Boxes:</strong> Random skins or currency.</li>
+                        <li><strong>Starter Packs:</strong> For new players — skin bundle + coins.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background:#f4f1ea; border-radius:14px; padding:18px 22px; margin-bottom:16px; border-left:5px solid #f5d8a0;">
+                <h3 style="font-size:1.0rem; margin-bottom:4px;">📅 Daily Offers</h3>
+                <p style="font-size:0.95rem; line-height:1.6;">
+                    Every day, the shop features <strong>limited-time offers</strong> with discounts (up to 70%!).
+                    Offers are unique to each player and refresh at midnight (local time).
+                    Don't miss out on rare skins at promotional prices!
+                </p>
+                <ul style="font-size:0.9rem; line-height:1.7; margin-top:6px; margin-left:18px;">
+                    <li>🎯 <strong>Daily Skin</strong> — one random skin on sale.</li>
+                    <li>💰 <strong>Coin Bonus</strong> — extra coins for purchases within 24h.</li>
+                    <li>⚡ <strong>Flash Offer</strong> — super deal available only for 6 hours.</li>
+                </ul>
+            </div>
+
+            <div style="background:#f0ebe4; border-radius:14px; padding:16px 20px;">
+                <h3 style="font-size:1.0rem; margin-bottom:4px;">🎁 Promo Code</h3>
+                <p style="font-size:0.95rem; line-height:1.6;">
+                    Enter the code <code style="background:#e0d6c8; padding:2px 12px; border-radius:6px; font-weight:700;">CHINCHILLA2026</code>
+                    in the shop to receive a <strong>free Epic skin</strong> and <strong>200 coins</strong>!
+                    The code is valid until the end of July 2026.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+    SCRIPT: TABS
+    ============================================================ -->
+    <script>
+        (function() {
+
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = {
+                battlemode: document.getElementById('tab-battlemode'),
+                downloading: document.getElementById('tab-downloading'),
+                skins: document.getElementById('tab-skins'),
+                shop: document.getElementById('tab-shop')
+            };
+
+            function activateTab(tabId) {
+                // hide all
+                Object.values(contents).forEach(el => el.classList.remove('active'));
+                // show selected
+                if (contents[tabId]) contents[tabId].classList.add('active');
+
+                // update buttons
+                tabs.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.tab === tabId) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                // save to history (optional)
+                if (history && history.pushState) {
+                    history.pushState({ tab: tabId }, '', '#' + tabId);
+                }
+            }
+
+            // click listeners
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const tabId = this.dataset.tab;
+                    if (tabId) activateTab(tabId);
+                });
+            });
+
+            // restore from hash on load
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && contents[initialHash]) {
+                activateTab(initialHash);
+            } else {
+                // default to battlemode
+                activateTab('battlemode');
+            }
+
+            // listen for hash changes (back/forward buttons)
+            window.addEventListener('hashchange', function() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && contents[hash]) {
+                    activateTab(hash);
+                }
+            });
+
+            // expose for console convenience
+            window.activateTab = activateTab;
+
+        })();
+    </script>
+
+</body>
+</html>
